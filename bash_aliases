@@ -37,6 +37,7 @@ if [ -x /usr/bin/dircolors ]; then
 	#alias ls='\ls -F --color=always | \less -r'	# option -F to classify with */=>@|
 	alias la='\ls -AC --color'			# list "almost all", by column
 	alias lsa='\ls -AF --color=auto'
+    alias lsi='\ls -1iqF --color=auto'  # list inode numbers and file names
 	alias ll='\ls -lsAF --time-style=+%Y%m%d-%H%M%S --color'
 										# as before +long formats +size in blocks
 	alias lc='\ls -CF --color=auto'		# list entry by column, classify 
@@ -75,7 +76,7 @@ alias cdp='cd -P'		# use physical directory structure,
 						#+ don't follow symbolic links
 
 alias j='jobs -l'		# option -l shows PID
-## below cat alias conflicts with 'pyenvvirtualenvwrapper' script and 'workon' cmd.
+## below 'cat' alias conflicts with 'pyenvvirtualenvwrapper' script and 'workon' cmd.
 #  [ckb]   Thu 18 Apr 2019 20:21:52 CEST
 #alias cat='cat -n'		# option -n  numbers all output lines
 alias ps='\ps -eF --headers | less'
@@ -180,14 +181,17 @@ alias bioinfo='sudo dmidecode --type 0'  # requires sudo passwd
 alias meminfo='sudo dmidecode --type 17' # requires sudo passwd
 alias gpuinfo='lspci -k | grep -EA2 "VGA|3D"'
 
-alias bindmesg='dmesg | curl -F "f:1=<-" ix.io' # send 'dmesg' content to pastebin
-alias binbootjournal='sudo journalctl -b | curl -F "f:1=<-" ix.io' # send 'journalctl -b' content to pastebin
+# send 'dmesg' content to pastebin
+alias bindmesg='dmesg | curl -F "f:1=<-" ix.io' 
 
-# print disk space usage for non-root users
-function findUserSpace () {
+# send 'journalctl -b' content to pastebin
+alias binbootjournal='sudo /usr/bin/journalctl -b | /usr/bin/curl -F '\''f:1=<-'\'' ix.io'
+
+function finduserspace () {
+    # print disk space usage for non-root users
     awk -F: '/bash/ && /home/ {print "/home/"$1}' /etc/passwd | xargs -l sudo du -sm
 }
-alias userspace='findUserSpace'
+alias userspace='finduserspace'
 
 
 ## Swappiness tweaking
@@ -243,6 +247,32 @@ alias df='df -kP'                   # check available space on volume of
 ## Network
 alias ping='\ping -c 5'
 
+# find available wlan networks in vicinity
+alias wifiscan='sudo /usr/bin/iw wifi0 scan | grep SSID'
+alias scanwifi='sudo /usr/bin/wpa_cli -i wifi0 scan_results'
+
+function whereisip() {
+    # finds where an IP's exit node is located
+    [ $# != 1 ] && printf "\nPlease provide exactly one IP address as argument.\n\n" && return
+    curl ipinfo.io/"$1"
+    printf "\n"
+}
+
+# finds where my own external IP's exit node is located
+alias myip='curl ipinfo.io/"$(curl -s icanhazip.com)";printf "\n"'
+
+function expandurl() {
+    # expands shortened url
+    [ $# != 1 ] && printf "\nPlease provide exactly one URL as argument.\n\n" && return
+    curl -sIL "$1" | grep ^Location
+}
+
+function iswebup() {
+    # details whether given web site is up and running
+    [ $# != 1 ] && printf "\nPlease provide exactly one web site as argument.\n\n" && return
+    curl --head -s "$1" -L | grep HTTP/
+}
+
 ## System
 alias halt='sudo halt'              # halt processes and machine with no 
 alias reboot='sudo /sbin/shutdown -r'
@@ -253,6 +283,12 @@ alias shutdown='sudo /sbin/shutdown -h'
 alias nocomment='grep -Ev '\''(#|$)'\'''
                                     # filter out comments in a grepped file
 
+## Gadgets
+function weather() {
+    # prints weather forecast in plain text on screen
+    [ $# != 1 ] && printf "\nPlease provide exactly one city name as argument.\n\n" && return
+    curl wttr.in/"$1"
+}
 
 # =====================================================================
 # PACKAGE OR ENVIRONMENT SPECIFIC SHORTCUTS AND FUNCTIONS
@@ -406,4 +442,3 @@ alias pythonpath='python -c "import sys; print('\''\n'\''.join(sys.path))"'
 #alias upcvpn='/usr/local/pulse/PulseClient.sh -h vpn.upc.edu -u sedric.bhihe -r Estudiants -U https://vpn.upc.edu'
 #alias upcvpnstat='/usr/local/pulse/PulseClient.sh -S'
 #alias upcvpnkill='/usr/local/pulse/PulseClient.sh -K'
-
