@@ -233,16 +233,18 @@ unset color_prompt force_color_prompt
 
 # If this is an xterm set the tile to 'tty tty_number::username@hostname::dir'
 case "$TERM" in
-xterm*|rxvt*)
-    # For Debian based systems only
-    #PS1="\[\e]0;tty $(tty|awk '{print substr($1,10)}') :: [${debian_chroot:+($debian_chroot)}] \u@\h \w\a\]$PS1"
-    #export PS1 ;;
-    # For Archlinux
-    PS1="\\[\\e]0;tty $(tty|awk '{print substr($1,10)}') :: \\u@\\h \\w\\a\\]$PS1"
-    export PS1
-    ;;
-*)
-    ;;
+    xterm*|rxvt*) 
+
+        # For Debian based systems
+        #PS1="\[\e]0;tty $(tty|awk '{print substr($1,10)}') :: [${debian_chroot:+($debian_chroot)}] \u@\h \w\a\]$PS1"
+        #export PS1 ;;
+
+        # For Archlinux
+        PS1="\\[\\e]0;tty $(tty|awk '{print substr($1,10)}') :: \\u@\\h \\w\\a\\]$PS1"
+        export PS1
+        ;;
+    *) 
+        ;;
 esac
 
 ## Alias definitions:
@@ -259,54 +261,6 @@ xbindkeys
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? -eq 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\''\)"'
 
-# ###########
-# PATH
-# ###########
-# PATH additions are made in ~/.profile and in ~/.bash_profile 
-# (for interactive login shells). See https://unix.stackexchange.com/a/26059/674
-
-# Notes on PATH environment variables
-# Right place to define PATH is usually ~/.profile (or .bash_profile, if you 
-# don't care for shells other than bash).
-
-# Caution when adding paths in front of PATH. as the order of priority for sourcing 
-# exec files in PATH is from left to right. An attacker could potentially replace
-# an innocuous looking cmd by something else by doing so.
-#PATH=$PATH:$HOME/anaconda2/bin  # AWS CLI setup, also by Anaconda2 4.3.1 installer
-#PATH=$PATH:/opt/bin:/opt/scripts
-#PATH=$PATH:$HOME/Documents/Scripts 
-
-# Make sure that systemd is made aware of custom PATHs.
-# This does NOT affect services started before .bash_profile is sourced.
-#systemctl --user import-environment PATH
-
-# Configure ~/.bashrc for Hadoop
-# Set Hadoop-related environment variables
-#export HADOOP_HOME=/opt/hadoop
-
-# Set JAVA_HOME (we will also configure it later on Hadoop)
-#export JAVA_HOME=/usr/lib/jvm/java-8-openjdk
-
-# Add Hadoop bin/ directory to PATH
-#export PATH=$PATH:$HADOOP_HOME/bin
-
-# 5) Configure ~/.bashrc for spark
-#export SPARK_HOME=/home/ckb/spark/spark
-#export PATH=$PATH:$SPARK_HOME/bin
-
-# 6) Configure PYTHON environment
-#if [ -n "$PYTHONPATH" ]; then
-#    PYTHONPATH="${HOME}/Documents/Work/Academic-research/___:${HOME}/Documents/Work/Academic-research/___:${PYTHONPATH}"
-#else
-#    PYTHONPATH="${HOME}/Documents/Work/Academic-research/___:${HOME}/Documents/Work/Academic-research/___"
-#fi
-
-# 7) Configure PYTHON virtual environment
-#export PYENV_ROOT="${HOME}"/.pyenv
-#export PATH=$PATH:"$PYENV_ROOT"/bin
-#export WORKON_HOME="$HOME"/.virtualenvs
-#mkdir -p "$WORKON_HOME"
-#export PROJECT_HOME="${HOME}"/Documents/Work/Data-science
 
 # Make sure `eval "$(pyenv init -)"` is placed at end of ~/.bashrc 
 #+ since it manipulates PATH
@@ -322,16 +276,12 @@ pyenv virtualenvwrapper
 #+ when using them for the first time
 source /usr/bin/virtualenvwrapper_lazy.sh
 
-# 8)  Clean up "paths" env_var
-#PATH=$(/opt/scripts/pathclean PATH "$PATH"); export PATH
-# `export PATH` is only necessary in old Bourne shell, not in modern linux shells
-#PYTHONPATH=$(/opt/scripts/pathclean PYTHONPATH "${PYTHONPATH}"); export PYTHONPATH
 
 # Set shells to use `torsocks` prefix as default for any cmd. 
 #source torsocks on
 # To disable `torsocks` for current shell
 #source torsocks off
 
-# Node Version Manager - Simple bash script to manage multiple active node.js
-# versions
+# Node Version Manager - Simple bash script to manage multiple active node.js 
+#+ versions
 source /usr/share/nvm/init-nvm.sh

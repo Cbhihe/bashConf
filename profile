@@ -66,10 +66,10 @@ if [ -n "$PYTHONPATH" ]; then
 else
     PYTHONPATH="${HOME}/Documents/Work/Data-science"
 fi
-export PYENV_ROOT="${HOME}"/.pyenv  # virtual environment
-export WORKON_HOME="$HOME"/.virtualenvs
+PYENV_ROOT="${HOME}"/.pyenv; export PYENV_ROOT   # virtual environment
+WORKON_HOME="${HOME}"/.virtualenvs; export WORKON_HOME
 mkdir -p "$WORKON_HOME"
-export PROJECT_HOME="${HOME}"/Documents/Work/Data-science
+PROJECT_HOME="${HOME}"/Documents/Work/Data-science; export PROJECT_HOME
 
 
 # #########
@@ -85,7 +85,7 @@ export PROJECT_HOME="${HOME}"/Documents/Work/Data-science
 # Use $HOME/ instead of ~/ in PATH for portability
 
 PATH=$PATH:/opt/bin:/opt/scripts
-PATH=$PATH:"$HOME"/Documents/Scripts # use $HOME/ instead of ~/ for portability
+PATH=$PATH:"${HOME}"/Documents/Scripts # use $HOME/ instead of ~/ for portability
 #PATH=$PATH:"$HOME"/anaconda2/bin    # AWS cli setup, also by Anaconda2 4.3.1 installer
 PATH=$PATH:"$HADOOP_HOME"/bin
 PATH=$PATH:"$SPARK_HOME"/bin
@@ -94,10 +94,10 @@ PATH=$PATH:"$PYENV_ROOT"/bin
 # #########
 # PATH CLEANING
 # #########
-PATH="$(pathclean PATH $PATH)"
+PATH=$(pathclean PATH "$PATH")
 export PATH             # only necessary for the old Bourne shell.
 
-PYTHONPATH="$(pathclean PYTHONPATH $PYTHONPATH)"
+PYTHONPATH=$(pathclean PYTHONPATH "$PYTHONPATH")
 export PYTHONPATH       # only necessary for the old Bourne shell.  
 
 # Make sure that systemd is made aware of custom PATHs.

@@ -193,6 +193,10 @@ function finduserspace () {
 }
 alias userspace='finduserspace'
 
+# Add an "alert" alias for long running commands.  Use like so:
+#   sleep 10; alert
+alias alert='notify-send --urgency=low -i "$([ $? -eq 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\''\)"'
+
 
 ## Swappiness tweaking
 # Default value of swappiness=60 means kernel starts swapping when RAM use
