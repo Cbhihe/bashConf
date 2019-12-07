@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-# set -x    # visualize all instructions as they are executed
+# set -x    # For debugging, visualize all instructions as they are executed
 
 # ##################
 # ~/.bash_profile
