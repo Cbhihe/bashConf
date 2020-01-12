@@ -45,7 +45,7 @@ if [ -x /usr/bin/dircolors ]; then
 	alias dir='dir -AF --color=auto'	# equal to '\ls -C -b -AF'
 	alias vdir='vdir -AF --color=auto'	# equal to '\ls -l -b -AF'
 	cdv () { 
-	# change dir + list target content
+	    # change dir + list target content
 		case x"$1" in
 			"x" )
 				cd || exit ; \ls -AF --color=auto;;
@@ -175,6 +175,7 @@ alias portinfo='netstat -tulanp'        # quickly list all TCP/UDP ports on $HOS
 alias cpuinfo='lscpu'			        # all info about the CPU
 alias ipinfo1='wget http://ipinfo.io/ip -qO -'
 alias ipinfo2='curl -s checkip.dyndns.org | sed -e "s/.*Current IP Address: //" -e "s/<.*$//"'
+alias ipinfo3='curl -s ifconfig.co'     # displays plain unproxied ip
 
 alias hwinfo='sudo dmidecode -q > ~/Documents/Backups/hw-profile.txt; printf "%s\n" "Hardware profile in file: ~/Documents/Backups/hw-profile.txt"'
 alias bioinfo='sudo dmidecode --type 0'  # requires sudo passwd
@@ -341,8 +342,12 @@ alias twiic='nowdir=$PWD; path="/mnt/TW_db-bin"; cd "${path}"; sudo tripwire -m 
 # =============================
 # AWS 
 sshaws() { 
-	printf "Connect to AWS instance ubuntu@%s" "$1\\n"
-	ssh -i "$HOME"/Study/UPC/Subjects/DS_decentralized-systems/Project/upcfib_ds.pem ubuntu@"$1"
+	printf "Connect to AWS instance %s@%s" "$1,$2\\n"
+	ssh -i "$3" "$1"@"$2"
+    # For UPC/FIB/MIRI/DS projecti use:
+    #   $1: "ubuntu"
+    #   $2: internet domain
+    #   $3: "~/Documents/Academic/UPC/MIRI/Subjetcs/DS_decentralized-systems/Project/upcfib_ds.pem"
 }
 #
 # CLI ENVIRONMENT VARIABLES
@@ -370,7 +375,9 @@ complete -C '/home/ckb/anaconda2/bin/aws_completer' aws
 
 alias aurvote='ssh aur@aur.archlinux.org vote'
 alias ifplugd='sudo systemctl start netctl-ifplugd@net0'
-alias upcvpn='sudo /usr/bin/openvpn --config /etc/openvpn/client.ovpn'
+alias upcvpn='sudo /usr/bin/openvpn --config /etc/openvpn/vpn.upc.edu.ovpn'
+alias basetisvpn='sudo /usr/bin/openvpn --config /etc/openvpn/vpn.basetis.com.ovpn'
+alias kubikvpn='sudo /usr/bin/openvpn --config /etc/openvpn/vpn.kubikdata.com.ovpn'
 alias upcssh='ssh bhihe@arvei.ac.upc.edu' # passwd: [usual_upc]
 alias paccacheclean='paccache -rk2'  # add '-u' to remove only uninstalled packages
 alias pacorphanclean='sudo pacman -Rns $(pacman -Qtdq)' # orphans' + conf files' recursive removal  

@@ -266,9 +266,13 @@ alias alert='notify-send --urgency=low -i "$([ $? -eq 0 ] && echo terminal || ec
 #+ since it manipulates PATH
 if [ -n "$(command -v pyenv)" ]; then eval "$(pyenv init -)"; fi
 
-# ensure that the global python version is always the latest of rolling release
-pyenv global "$(/usr/bin/python --version | cut -d' ' -f2)"
-/usr/bin/python --version | cut -d' ' -f2 >| "${PYENV_ROOT}"/version
+# ensure global python version is always latest of rolling release available for 'pyenv'
+#    2 lines below are commented because latest rolling release version can be ahead of 
+#    versions available for pyenv to install 
+#pyenv global "$(/usr/bin/python --version | cut -d' ' -f2)"
+#/usr/bin/python --version | cut -d' ' -f2 >| "${PYENV_ROOT}"/version
+pyenv global "$(tail -1 <( sed '/[a-zA-Z]/d;s/^[ \t]*//' <(pyenv install --list) ))"
+/usr/bin/echo "$(pyenv global)" >| "${PYENV_ROOT}"/version
 
 # ensure access to 'virtualenvwrapper' runtime namespace
 pyenv virtualenvwrapper
