@@ -116,7 +116,7 @@ function umount () {
 	fi
 }
 
-# Disable touchpad for given number of seconds
+# Disable Touchpad for given number of seconds
 function padoff () {
 	if [ ! $# -eq 1 ] ; then
 		printf "Exactly one numeric argument (time in seconds) required.\\n"
@@ -375,9 +375,9 @@ complete -C '/home/ckb/anaconda2/bin/aws_completer' aws
 
 alias aurvote='ssh aur@aur.archlinux.org vote'
 alias ifplugd='sudo systemctl start netctl-ifplugd@net0'
-alias upcvpn='sudo /usr/bin/openvpn --config /etc/openvpn/vpn.upc.edu.ovpn'
-alias basetisvpn='sudo /usr/bin/openvpn --config /etc/openvpn/vpn.basetis.com.ovpn'
-alias kubikvpn='sudo /usr/bin/openvpn --config /etc/openvpn/vpn.kubikdata.com.ovpn'
+alias upcvpn='sudo /usr/bin/openvpn --config /etc/openvpn/vpn.upc-fib-access.ovpn'
+alias basetisvpn='sudo /usr/bin/openvpn --config /etc/openvpn/vpn.basetis-access.ovpn'
+alias kubikvpn='sudo /usr/bin/openvpn --config /etc/openvpn/vpn.kubik-aws-access.ovpn'
 alias upcssh='ssh bhihe@arvei.ac.upc.edu' # passwd: [usual_upc]
 alias paccacheclean='paccache -rk2'  # add '-u' to remove only uninstalled packages
 alias pacorphanclean='sudo pacman -Rns $(pacman -Qtdq)' # orphans' + conf files' recursive removal  

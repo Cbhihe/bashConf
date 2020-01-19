@@ -167,8 +167,8 @@ fi
 # for interactive terminals)
 #shopt -s checkwinsize
 
-# If set, the pattern "**" used in a pathname expansion context will
-# match all files and zero or more directories and subdirectories.
+# If set, the pattern "**" used in a path-name expansion context will
+# match all files and zero or more directories and sub-directories.
 # shopt -s globstar
 
 # Make 'less' more friendly for non-text input files, see lesspipe(1)
@@ -199,9 +199,10 @@ fi
 parse_git_branch() {
     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
 }
+
 #git config --global --add color.ui true
-GIT_PS1_SHOWDIRTYSTATE="enable"
-GIT_PS1_SHOWSTASHSTATE="enable"
+export GIT_PS1_SHOWDIRTYSTATE="enable"
+export GIT_PS1_SHOWSTASHSTATE="enable"
 
 # Set variable identifying the chroot you work in (used in prompt below for Debian envt)
 #if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then

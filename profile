@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 
 # ###############
-# ~/.profile
+# $HOME/.profile
 # ###############
 
 # This file is immediately parsed and sourced by GDM's login manager upon GUI login.

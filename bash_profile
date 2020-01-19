@@ -15,7 +15,7 @@
 # if ~/.bash_profile  does not exist, the shell looks for ~/.bash_login. 
 # If ~/.bash_login does not exist, the shell looks for ~/.profile
 # If ~/.profile is not there, the shell gives a prompt. In that case, by 
-# default, `.bashrc` is not read, unless so arranged by the sys-admin.
+# default, `.bashrc` is not read, unless arranged otherwise by sys-admin.
 
 # Prior to 'bash' execution, other files are read by the linux PAM layer:
 #+ /etc/pam.d/login
