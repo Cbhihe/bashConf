@@ -183,10 +183,13 @@ alias meminfo='sudo dmidecode --type 17' # requires sudo passwd
 alias gpuinfo='lspci -k | grep -EA2 "VGA|3D"'
 
 # send 'dmesg' content to pastebin
-alias bindmesg='dmesg | curl -F "f:1=<-" ix.io' 
+#    'curl -F': curl POSTs data as a filled form using the Content-Type multipart/form-data
+#    ' <- ' when file-name is prefixed with '<' the file is actually treated as its text content
+#       as obtained from stdin '-'
+alias dmesg2bin='/usr/bin/dmesg | /usr/bin/curl -F "f:1=<-" ix.io' 
 
 # send 'journalctl -b' content to pastebin
-alias binbootjournal='sudo /usr/bin/journalctl -b | /usr/bin/curl -F '\''f:1=<-'\'' ix.io'
+alias bootjournal2bin='sudo /usr/bin/journalctl -b | /usr/bin/curl -F '\''f:1=<-'\'' ix.io'
 
 function finduserspace () {
     # print disk space usage for non-root users
@@ -328,8 +331,11 @@ function gitcom() {
     # "$*" makes all arguments to one
     git commit -m  "$*"
 }
-
-alias gitlog='git log --pretty=format:"%h: %an-%cn %cr: %s" --graph'
+alias gitloglast='for branch in $(git branch -r | grep -v HEAD);do echo -e $(git show --format="%ci %cr" $branch | head -n 1) \\t$branch; done | sort -r'
+#alias gitlog='git log --pretty=format:"%>(9)%Cgreen%h%Creset: Author: %Cblue%an%Creset | Committer: %Cblue%cn%Creset | Time: %ad%n         Note: %s" --graph --date=format:"%Y-%M-%d %H:%m:%S"'
+# Show git log with commit time-stamp
+alias gitlog='git log --pretty=format:"%Cgreen%h%Creset: Author: %Cblue%an%Creset | Committer: %Cblue%cn%Creset | Commit time: %cd%n         Note: %s" --graph --date=format:"%Y-%m-%d %H:%M:%S"'
+#alias gitlog='git log --color=always --pretty=format:"%h: %an-%cn %cr: %s" --graph | less -WN'
 
 # =============================
 # TRIPWIRE

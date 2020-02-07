@@ -33,7 +33,8 @@ MAILCHECK=60
 # Suppress duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
 HISTCONTROL=ignoreboth
-# HISTTIMEFORMAT='%F %T'; export HISTTIMEFORMAT
+HISTTIMEFORMAT='%F %T - '; export HISTTIMEFORMAT
+# HISTTIMEFORMAT="%Y%m%d %T - "
 
 # if "ignoreboth" is commented out, history will record all command lines 
 #+ entered after a prompt, including those beginning with a space and 

@@ -20,7 +20,7 @@
 # Prior to 'bash' execution, other files are read by the linux PAM layer:
 #+ /etc/pam.d/login
 #+ /etc/pam.d/login.defs 
-#+ [more files depending on the Linux distro...]
+#+ [more files depending on Linux distro ...]
 #+ /etc/profile
 
 # "ssh" login is very similar to the above except that initial greeting 
@@ -28,7 +28,7 @@
 #+ PAM, but by sshd. In that case the ssh deamon, sshd, reads successively:
 #+ /etc/pam.d/ssh
 #+ /etc/pam.d/ssh.defs 
-#+ [more files depending on linux distro...]
+#+ [more files depending on linux distro ...]
 #+ /etc/profile
 # The main difference with local console login is some environment variables
 #+ may be passed on from the machine-session on which ssh is being run (e.g.
