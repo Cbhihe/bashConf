@@ -219,7 +219,7 @@ if [ "$color_prompt" = yes ]; then
     #PS1="${debian_chroot:+($debian_chroot)}\[\e[0;38;5;166m\][\#/\!]\[\e[1;34m\] \w\[\e[38;5;46m\] \$(parse_git_branch)\[\e[1;38;5;166m\]>\[\e[0m\]"
 
     # For Archlinux
-    PS1="\\[\\e[0;38;5;166m\\][\\#/\\!]\\[\\e[1;34m\\] \\w\\[\\e[38;5;46m\\] \$(parse_git_branch)\\[\\e[1;38;5;166m\\]\\> \\[\\e[0m\\]"
+    PS1="\\[\\e[0;38;5;166m\\][\\#/\\!]\\[\\e[1;34m\\] \\w\\[\\e[38;5;46m\\] \$(parse_git_branch)\\[\\e[1;38;5;166m\\]\> \\[\\e[0m\\]"
 
 else
     # For Debian based systems only
@@ -227,7 +227,7 @@ else
     #export PS1="${debian_chroot:+}[\#/\!] \[\w \$(parse_git_branch)\]>"
 
     # For Archlinux
-    PS1="[\\#/\\!] \\[\\w \$(parse_git_branch)\\]>"
+    PS1="[\\#/\\!] \\[\\w \$(parse_git_branch)\\]\>"
 fi
 export PS1
 

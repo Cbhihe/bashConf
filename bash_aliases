@@ -1,6 +1,7 @@
 #!/usr/bin/bash
 
-# ~/.bash_aliases: executed by .bashrc for non-login shells.
+# ~/.bash_aliases: 
+#    executed by ~/.bashrc for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
@@ -23,11 +24,13 @@ alias h='\history 5'
 # test for color db for ls and define env-var LS_COLORS
 if [ -x /usr/bin/dircolors ]; then
 
-    if [ -r ~/.dircolors ] ; then
+    colopt="color=auto"
+
+    if [ -r ~/.dircolors ] ; then  
 		eval "$(dircolors -b ~/.dircolors)"
     else 
 		eval "$(dircolors -b)"
-		# tweak default ls colors as seen output from '> dircolors -p'
+        # tweak default ls colors as seen outpi )ut from '> dircolors -p'
 		LS_COLORS="${LS_COLORS}:tw=31;43:ow=01;37;43"
 		export LS_COLORS
     fi
@@ -44,13 +47,16 @@ if [ -x /usr/bin/dircolors ]; then
 #	lld () {\ls -AlF --color=auto $1 | egrep "^d";}	# long list dir only
 	alias dir='dir -AF --color=auto'	# equal to '\ls -C -b -AF'
 	alias vdir='vdir -AF --color=auto'	# equal to '\ls -l -b -AF'
+
 	cdv () { 
 	    # change dir + list target content
+        echo $colopt
 		case x"$1" in
 			"x" )
-				cd || exit ; \ls -AF --color=auto;;
+				#cd || exit ; \ls -AF --color=auto;;
+				cd ; \ls -AF --color=auto;;
 			* )
-				cd "$1" || exit ; \ls -AF --color=auto;;
+                [ -d "$1" ] && ( cd "$1" ; \ls -AF --color=auto );;
 		esac
 		} 
 	alias grep='grep --color=auto'
@@ -66,7 +72,7 @@ else
 	alias lc='\ls -CF'		# list entry by column, classify 
 	alias dir='dir -AF'		# equal to '\ls -C -b -AF'
 	alias vdir='vdir -AF'	# equal to '\ls -l -b -AF'
-	cdv () { cd "$1" || exit ; \ls -AF; } # change dir + list target content
+	cdv () { cd "$1" ; \ls -AF; } # change dir + list target content
 fi
 
 #alias less='\less -R'	# maintain screen appearance in presence of ANSI "color" escape sequences 
@@ -252,6 +258,19 @@ alias df='df -kP'                   # check available space on volume of
                                     # cp with progress bar ??
 # alias asuf='cp "$1" "$1""$2"'     # needs work
 
+## Cheatsheet
+function usage() {
+    # yields usage examples for sought after cmds
+    # accepts any number of cmd names as args
+    cmd_name="$1"
+    while [ -n "$cmd_name" ] ; do
+        /usr/bin/curl cheat.sh/"${cmd_name}"  2>/dev/null | less
+        shift
+        cmd_name="$1"
+    done
+}
+
+
 ## Network
 alias ping='\ping -c 5'
 
@@ -297,6 +316,8 @@ function weather() {
     [ $# != 1 ] && printf "\nPlease provide exactly one city name as argument.\n\n" && return
     curl wttr.in/"$1"
 }
+
+alias worldmap='telnet mapscii.me'
 
 # =====================================================================
 # PACKAGE OR ENVIRONMENT SPECIFIC SHORTCUTS AND FUNCTIONS
@@ -382,8 +403,8 @@ complete -C '/home/ckb/anaconda2/bin/aws_completer' aws
 alias aurvote='ssh aur@aur.archlinux.org vote'
 alias ifplugd='sudo systemctl start netctl-ifplugd@net0'
 alias upcvpn='sudo /usr/bin/openvpn --config /etc/openvpn/vpn.upc-fib-access.ovpn'
-alias basetisvpn='sudo /usr/bin/openvpn --config /etc/openvpn/vpn.basetis-access.ovpn'
-alias kubikvpn='sudo /usr/bin/openvpn --config /etc/openvpn/vpn.kubik-aws-access.ovpn'
+alias basetisvpn='sudo /usr/bin/openvpn --config /etc/openvpn/vpn.basetis-pedrera.ovpn'
+alias kubikawsbastion='ssh -i ca.pem/aws_kubikprivatekey.pem basetis@proxy.kubikdata.online'
 alias upcssh='ssh bhihe@arvei.ac.upc.edu' # passwd: [usual_upc]
 alias paccacheclean='paccache -rk2'  # add '-u' to remove only uninstalled packages
 alias pacorphanclean='sudo pacman -Rns $(pacman -Qtdq)' # orphans' + conf files' recursive removal  
